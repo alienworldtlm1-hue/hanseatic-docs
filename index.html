@@ -175,7 +175,7 @@ function confirmKey(){
   chkReady();
 }
 // Restore from session
-(function(){const k=sessionStorage.getItem('ha_key');if(k){userApiKey=k;document.getElementById('keystatus').textContent='Key loaded from session.';document.getElementById('keystatus').style.color='var(--g)';document.getElementById('keyinp').value='••••••••••••••••••••';}})();
+(function(){const k=sessionStorage.getItem('ha_key');if(k){userApiKey=k;document.getElementById('keystatus').textContent='Key loaded from session.';document.getElementById('keystatus').style.color='var(--g)';document.getElementById('keyinp').value='••••••••••••••••••••';chkReady();}})();
 function show(id){['scr-up','scr-proc','scr-rev'].forEach(s=>{document.getElementById(s).style.display=s===id?'block':'none';});}
 function setStep(n){for(let i=1;i<=4;i++){document.getElementById('sb'+i).className='stp'+(i===n?' active':i<n?' done':'');if(i<4)document.getElementById('sl'+i).className='sline'+(i<n?' done':'');}}
 function setPtxt(m,s){document.getElementById('ptxt').textContent=m;document.getElementById('psub').textContent=s||'';}
