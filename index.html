@@ -7,52 +7,60 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh;padding:16px}
-:root{--g:#1a5c2a;--gl:#e8f2ea;--bd:#cfd5cf}
+:root{--g:#1a5c2a;--gl:#e8f2ea;--bd:#d0d5d0}
 #app{max-width:1140px;margin:0 auto}
 .topbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;background:#fff;border:1px solid var(--bd);border-radius:8px;padding:9px 14px}
-.steps{display:flex;align-items:center;flex:1;gap:0;flex-wrap:wrap;gap:2px}
+.steps{display:flex;align-items:center;flex:1;gap:0}
 .stp{display:flex;align-items:center;gap:5px;font-size:12px;color:#aaa}
 .stp.active{color:var(--g);font-weight:700}
 .stp.done{color:#555}
-.snum{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.snum{width:22px;height:22px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .stp.active .snum{border-color:var(--g);background:var(--g);color:#fff}
 .stp.done .snum{border-color:#555;background:#555;color:#fff}
-.sline{width:18px;height:2px;background:#ddd;margin:0 4px}
+.sline{width:24px;height:2px;background:#ddd;margin:0 6px;flex-shrink:0}
 .sline.done{background:#555}
-.hbtn{background:#fff;border:1.5px solid var(--bd);border-radius:5px;padding:4px 10px;font-size:12px;color:#666;cursor:pointer}
+.hbtn{background:#fff;border:1.5px solid var(--bd);border-radius:6px;padding:5px 12px;font-size:12px;color:#555;cursor:pointer;flex-shrink:0}
 .hbtn:hover{border-color:var(--g);color:var(--g)}
 .card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:24px}
-.stitle{font-size:17px;font-weight:700;color:var(--g);margin-bottom:3px}
-.ssub{font-size:13px;color:#666;margin-bottom:18px}
-.dtype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
-.dtype{padding:14px;border:2px solid var(--bd);border-radius:7px;cursor:pointer;text-align:center;transition:all .15s}
+.stitle{font-size:18px;font-weight:700;color:var(--g);margin-bottom:4px}
+.ssub{font-size:13px;color:#666;margin-bottom:20px}
+.apibox{background:#f0f6f1;border:1.5px solid var(--g);border-radius:8px;padding:14px;margin-bottom:20px}
+.apibox label{font-size:12px;font-weight:700;color:var(--g);display:block;margin-bottom:4px}
+.apinote{font-size:11px;color:#666;margin-bottom:8px}
+.apirow{display:flex;gap:8px}
+.apirow input{flex:1;border:1px solid var(--bd);border-radius:4px;padding:7px 10px;font-size:13px;font-family:monospace;background:#fff}
+.apirow button{background:var(--g);color:#fff;border:none;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer}
+.apistatus{font-size:11px;margin-top:6px;color:#888}
+.apistatus.ok{color:var(--g);font-weight:700}
+.dtype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.dtype{padding:16px;border:2px solid var(--bd);border-radius:8px;cursor:pointer;text-align:center;transition:all .15s}
 .dtype:hover,.dtype.sel{border-color:var(--g);background:var(--gl)}
-.dtype .dl{font-size:15px;font-weight:700;color:var(--g);display:block;margin-bottom:2px}
+.dtype .dl{font-size:16px;font-weight:700;color:var(--g);display:block;margin-bottom:3px}
 .dtype .ds{font-size:11px;color:#888}
-.upzone{border:2px dashed var(--bd);border-radius:7px;padding:30px;text-align:center;cursor:pointer;transition:all .15s;background:#fafafa}
+.upzone{border:2px dashed var(--bd);border-radius:8px;padding:34px;text-align:center;cursor:pointer;transition:all .15s;background:#fafafa}
 .upzone:hover,.upzone.drag{border-color:var(--g);background:var(--gl)}
 .upzone input{display:none}
 .uptxt{font-size:13px;color:#555}.uptxt b{color:var(--g)}
 .fchosen{margin-top:8px;font-size:13px;color:var(--g);font-weight:600;display:none}
 .errmsg{color:#c00;font-size:13px;margin-top:10px;padding:8px 12px;background:#fff0f0;border-radius:4px;border:1px solid #fcc;display:none}
-.frow{display:flex;justify-content:flex-end;margin-top:16px}
-.btnp{background:var(--g);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}
-.btnp:hover{opacity:.88}.btnp:disabled{background:#aaa;cursor:not-allowed}
-.btns{background:#fff;color:var(--g);border:2px solid var(--g);padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.frow{display:flex;justify-content:flex-end;margin-top:18px}
+.btnp{background:var(--g);color:#fff;border:none;padding:11px 26px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}
+.btnp:hover{opacity:.9}.btnp:disabled{background:#aaa;cursor:not-allowed}
+.btns{background:#fff;color:var(--g);border:2px solid var(--g);padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
 .btns:hover{background:var(--gl)}
-#scr-proc{display:none;text-align:center;padding:50px}
-.spin{width:42px;height:42px;border:4px solid #eee;border-top:4px solid var(--g);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+#scr-proc{display:none;text-align:center;padding:60px}
+.spin{width:44px;height:44px;border:4px solid #eee;border-top:4px solid var(--g);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 18px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ptxt{font-size:15px;color:#444}.psub{font-size:12px;color:#aaa;margin-top:5px}
+.ptxt{font-size:15px;color:#444}.psub{font-size:12px;color:#aaa;margin-top:6px}
 #scr-rev{display:none}
-.warnbar{background:#fff8e1;color:#7a5c00;font-size:12px;padding:8px 12px;border-radius:6px;margin-bottom:12px;border:1px solid #ffe082}
+.warnbar{background:#fff8e1;color:#7a5c00;font-size:12px;padding:8px 12px;border-radius:6px;margin-bottom:14px;border:1px solid #ffe082}
 .revgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .rpanel{background:#fff;border-radius:8px;border:1px solid var(--bd);overflow:hidden}
-.phead{background:var(--g);color:#fff;padding:9px 13px;font-size:13px;font-weight:700}
-.pbody{padding:12px;max-height:66vh;overflow-y:auto}
-.flbl{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;margin-top:11px}
+.phead{background:var(--g);color:#fff;padding:10px 14px;font-size:13px;font-weight:700}
+.pbody{padding:13px;max-height:66vh;overflow-y:auto}
+.flbl{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;margin-top:12px}
 .flbl:first-child{margin-top:0}
-.finp{width:100%;border:1px solid var(--bd);border-radius:4px;padding:5px 8px;font-size:12px;color:#222;background:#fff;resize:vertical;font-family:inherit}
+.finp{width:100%;border:1px solid var(--bd);border-radius:4px;padding:6px 8px;font-size:12px;color:#222;background:#fff;resize:vertical;font-family:inherit}
 .finp:focus{outline:none;border-color:var(--g)}
 .sectlbl{font-size:10px;font-weight:700;color:var(--g);margin:14px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--gl);text-transform:uppercase}
 .srow{display:grid;gap:3px;margin-bottom:3px;align-items:center}
@@ -61,15 +69,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh
 .rmvbtn{background:none;border:none;color:#b00;cursor:pointer;font-size:14px;padding:0 2px}
 .addbtn{font-size:11px;color:var(--g);background:none;border:1px dashed var(--g);padding:3px 9px;border-radius:3px;cursor:pointer;margin-top:3px;display:inline-block}
 .actbar{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-/* PREVIEW */
 #prev-wrap{font-family:'Times New Roman',Times,serif;font-size:10pt;color:#000}
 .dp{padding:16px 20px}
 .dh{display:flex;justify-content:space-between;align-items:flex-start;border:2px solid #1a5c2a;padding:9px 12px;margin-bottom:14px}
 .dh-l{font-size:11pt;font-weight:700}
 .dh-sub{font-size:8.5pt;font-style:italic;color:#444;font-weight:400}
 .dh-co{font-size:7.5pt;color:#666;margin-top:2px;font-weight:400}
-.dmt{width:100%;border-collapse:collapse;margin-bottom:11px;font-size:9pt}
-.dmt td{padding:2px 4px}.dmt td:first-child{font-weight:700;width:120px}
+.logo-ph{width:150px;height:55px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:9pt;font-family:Arial,sans-serif;flex-shrink:0}
+.dmt{width:100%;border-collapse:collapse;margin-bottom:11px;font-size:9.5pt}
+.dmt td{padding:2px 5px}.dmt td:first-child{font-weight:700;width:120px}
 .dst{color:#1a5c2a;font-weight:700;font-size:9.5pt;margin:10px 0 3px;padding-bottom:2px;border-bottom:1.5px solid #1a5c2a}
 .dtb{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px}
 .dtb th{background:#1a5c2a;color:#fff;padding:5px 8px;text-align:left;font-weight:700;font-size:9.5pt}
@@ -77,9 +85,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh
 .dtb tr:nth-child(even) td{background:#f4f8f4}
 .dcon{margin-top:10px;font-weight:700;font-size:10pt}
 .dft{margin-top:14px;border-top:1px solid #1a5c2a;padding-top:5px;font-size:7pt;color:#444;text-align:center}
-.ctb{width:100%;border-collapse:collapse;font-size:8.5pt;margin:4px 0 8px}
-.ctb th{background:#1a5c2a;color:#fff;padding:4px 6px;text-align:left;font-size:8pt}
-.ctb td{padding:3px 6px;border-bottom:.5px solid #ccc}
+.ctb{width:100%;border-collapse:collapse;font-size:9pt;margin:4px 0 8px}
+.ctb th{background:#1a5c2a;color:#fff;padding:4px 7px;text-align:left;font-size:8.5pt}
+.ctb td{padding:3px 7px;border-bottom:.5px solid #ccc}
 .mst{font-size:9pt;line-height:1.5;margin-bottom:3px}
 .msb{font-weight:700;font-size:9pt;margin:5px 0 2px}
 </style>
@@ -102,23 +110,25 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh
 <div id="scr-up" class="card">
   <div class="stitle">Document Processor</div>
   <div class="ssub">Convert supplier documents into Hanseatic Agri corporate format.</div>
-  <!-- API KEY BOX -->
-  <div style="background:#f0f6f1;border:1.5px solid var(--g);border-radius:8px;padding:14px;margin-bottom:18px">
-    <div style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:4px">🔑 Anthropic API Key</div>
-    <div style="font-size:11px;color:#666;margin-bottom:8px">Required to process documents. Stored only in your browser session — never sent anywhere except Anthropic's API.</div>
-    <div style="display:flex;gap:8px">
-      <input type="password" id="keyinp" placeholder="sk-ant-api03-..." style="flex:1;border:1px solid var(--bd);border-radius:4px;padding:7px 10px;font-size:13px;font-family:monospace;background:#fff">
-      <button onclick="confirmKey()" style="background:var(--g);color:#fff;border:none;padding:7px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer">Save</button>
+
+  <div class="apibox">
+    <label>🔑 Anthropic API Key</label>
+    <div class="apinote">Stored only in your browser - never shared. Get yours at console.anthropic.com</div>
+    <div class="apirow">
+      <input type="password" id="keyinp" placeholder="sk-ant-api03-...">
+      <button onclick="saveKey()">Save Key</button>
     </div>
-    <div id="keystatus" style="font-size:11px;margin-top:6px;color:#888">No key saved yet. Enter your key from console.anthropic.com</div>
+    <div class="apistatus" id="apistatus">No key entered yet.</div>
   </div>
-  <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px">1. Select document type</div>
+
+  <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:9px">1. Select document type</div>
   <div class="dtype-grid">
     <div class="dtype" onclick="selType('COA')" id="bt-COA"><span class="dl">COA</span><span class="ds">Certificate of Analysis</span></div>
     <div class="dtype" onclick="selType('TDS')" id="bt-TDS"><span class="dl">TDS</span><span class="ds">Technical Data Sheet</span></div>
     <div class="dtype" onclick="selType('MSDS')" id="bt-MSDS"><span class="dl">MSDS</span><span class="ds">Material Safety Data Sheet</span></div>
   </div>
-  <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px">2. Upload supplier PDF or image</div>
+
+  <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:9px">2. Upload supplier PDF or image</div>
   <div class="upzone" id="upzone" onclick="document.getElementById('fi').click()" ondragover="ev(event)" ondrop="drop(event)">
     <input type="file" id="fi" accept=".pdf,image/png,image/jpeg,image/jpg" onchange="setFile(event)">
     <div style="font-size:28px;margin-bottom:6px">📄</div>
@@ -126,13 +136,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh
     <div class="fchosen" id="fclbl"></div>
   </div>
   <div class="errmsg" id="errmsg"></div>
-  <div class="frow"><button class="btnp" id="procbtn" onclick="startProc()" disabled>Process Document →</button></div>
+  <div class="frow">
+    <button class="btnp" id="procbtn" onclick="startProc()" disabled>Process Document →</button>
+  </div>
 </div>
 
 <div id="scr-proc" class="card">
   <div class="spin"></div>
-  <div class="ptxt" id="ptxt">Loading PDF library...</div>
-  <div class="psub" id="psub">Please wait.</div>
+  <div class="ptxt" id="ptxt">Reading document...</div>
+  <div class="psub" id="psub">This may take 15-30 seconds.</div>
 </div>
 
 <div id="scr-rev">
@@ -143,67 +155,110 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f0;min-height:100vh
   </div>
   <div class="actbar">
     <button class="btns" onclick="goHome()">← Start Over</button>
-    <button class="btnp" id="dlbtn" onclick="doDownload()">⬇ Download HTML (open & Print→PDF)</button>
+    <button class="btnp" id="dlbtn" onclick="doDownload()">⬇ Download HTML</button>
   </div>
 </div>
 </div>
 
 <script>
 const FOOTER='CCE Hanseatic Agri GmbH, Tempowerkring 6, 21079 Hamburg, Tel. +49 40 537 997 770 / Fax. +49 40 537 997 773 / www.hanseatic-agri.com / info@hanseatic-agri.com';
+const LOGO='<div class="logo-ph">[Insert Logo]</div>';
 
-// Logo placeholder - insert your logo in PDF editor
-const LOGO=`<div style="width:160px;height:60px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#aaa;font-size:9pt;font-family:Arial,sans-serif">[Logo]</div>`;
+let docType=null, uploadedFile=null, extractedData=null;
+let _apiKey='';
 
-const API_KEY=null;
-let docType=null, uploadedFile=null, extractedData=null, userApiKey=null;
+function getKey(){return _apiKey||sessionStorage.getItem('ha_key')||'';}
 
-function getKey(){return userApiKey||sessionStorage.getItem('ha_key');}
-function saveKey(k){userApiKey=k;sessionStorage.setItem('ha_key',k);}
+function saveKey(){
+  const v=document.getElementById('keyinp').value.trim();
+  if(!v||!v.startsWith('sk-ant-')){
+    setStatus('Invalid key. Must start with sk-ant-','#c00');
+    return;
+  }
+  _apiKey=v;
+  sessionStorage.setItem('ha_key',v);
+  document.getElementById('keyinp').value='sk-ant-...saved';
+  setStatus('✓ Key saved for this session.','#1a5c2a');
+  chkReady();
+}
 
-function selType(t){docType=t;['COA','TDS','MSDS'].forEach(x=>document.getElementById('bt-'+x).classList.toggle('sel',x===t));chkReady();}
+function setStatus(msg,color){
+  const el=document.getElementById('apistatus');
+  el.textContent=msg;
+  el.style.color=color||'#888';
+}
+
+function selType(t){
+  docType=t;
+  ['COA','TDS','MSDS'].forEach(x=>document.getElementById('bt-'+x).classList.toggle('sel',x===t));
+  chkReady();
+}
+
 function ev(e){e.preventDefault();document.getElementById('upzone').classList.add('drag');}
 function drop(e){e.preventDefault();document.getElementById('upzone').classList.remove('drag');if(e.dataTransfer.files[0])applyFile(e.dataTransfer.files[0]);}
 function setFile(e){if(e.target.files[0])applyFile(e.target.files[0]);}
-function applyFile(f){uploadedFile=f;const l=document.getElementById('fclbl');l.textContent='✓ '+f.name;l.style.display='block';chkReady();}
-function confirmKey(){
-  const v=document.getElementById('keyinp').value.trim();
-  if(!v.startsWith('sk-ant-')){document.getElementById('keystatus').textContent='Invalid key - must start with sk-ant-';document.getElementById('keystatus').style.color='#c00';return;}
-  saveKey(v);
-  document.getElementById('keystatus').textContent='Key saved for this session.';
-  document.getElementById('keystatus').style.color='var(--g)';
-  document.getElementById('keyinp').value='••••••••••••••••••••';
+function applyFile(f){
+  uploadedFile=f;
+  const l=document.getElementById('fclbl');
+  l.textContent='✓ '+f.name;
+  l.style.display='block';
   chkReady();
 }
-// Restore from session
-(function(){const k=sessionStorage.getItem('ha_key');if(k){userApiKey=k;document.getElementById('keystatus').textContent='Key loaded from session.';document.getElementById('keystatus').style.color='var(--g)';document.getElementById('keyinp').value='••••••••••••••••••••';chkReady();}})();
-function show(id){['scr-up','scr-proc','scr-rev'].forEach(s=>{document.getElementById(s).style.display=s===id?'block':'none';});}
-function setStep(n){for(let i=1;i<=4;i++){document.getElementById('sb'+i).className='stp'+(i===n?' active':i<n?' done':'');if(i<4)document.getElementById('sl'+i).className='sline'+(i<n?' done':'');}}
-function setPtxt(m,s){document.getElementById('ptxt').textContent=m;document.getElementById('psub').textContent=s||'';}
-function showErr(msg){const e=document.getElementById('errmsg');e.textContent=msg;e.style.display='block';}
+
+function chkReady(){
+  const ok=!!(docType&&uploadedFile);
+  document.getElementById('procbtn').disabled=!ok;
+}
+
+function show(id){
+  ['scr-up','scr-proc','scr-rev'].forEach(s=>{
+    document.getElementById(s).style.display=s===id?'block':'none';
+  });
+}
+
+function setStep(n){
+  for(let i=1;i<=4;i++){
+    document.getElementById('sb'+i).className='stp'+(i===n?' active':i<n?' done':'');
+    if(i<4)document.getElementById('sl'+i).className='sline'+(i<n?' done':'');
+  }
+}
+
+function setPtxt(m,s){
+  document.getElementById('ptxt').textContent=m;
+  document.getElementById('psub').textContent=s||'';
+}
+
+function showErr(msg){
+  const e=document.getElementById('errmsg');
+  e.textContent=msg;
+  e.style.display='block';
+}
 
 async function startProc(){
+  const key=getKey();
+  if(!key){
+    showErr('Please enter your Anthropic API key first.');
+    return;
+  }
   document.getElementById('errmsg').style.display='none';
   show('scr-proc');setStep(2);
   try{
     setPtxt('Loading PDF library...','');
     await loadPDFJS();
     setPtxt('Extracting text from document...','Reading all pages.');
-    const {text, isImage, imageData} = await readFile(uploadedFile);
-    setPtxt('Sending to Claude AI...','Analyzing and mapping data to Hanseatic format.');
-    const json = await callClaude(text, docType, isImage, imageData);
+    const {text,isImage,imageData}=await readFile(uploadedFile);
+    setPtxt('Sending to Claude AI...','Analyzing and mapping to Hanseatic format.');
+    const json=await callClaude(text,docType,isImage,imageData,key);
     extractedData=json;
     setPtxt('Building preview...','Almost done.');
-    await delay(300);
+    await new Promise(r=>setTimeout(r,300));
     buildReview(json,docType);
     show('scr-rev');setStep(3);
   }catch(err){
     show('scr-up');setStep(1);
     showErr('Error: '+err.message);
-    console.error(err);
   }
 }
-
-function delay(ms){return new Promise(r=>setTimeout(r,ms));}
 
 async function loadPDFJS(){
   if(window.pdfjsLib)return;
@@ -222,98 +277,69 @@ function loadScript(src){
 async function readFile(file){
   const isPDF=file.name.toLowerCase().endsWith('.pdf')||file.type==='application/pdf';
   if(isPDF){
-    setPtxt('Extracting text from PDF...','Reading all pages.');
     const arr=await file.arrayBuffer();
     const pdf=await window.pdfjsLib.getDocument({data:arr}).promise;
     let pages=[];
     for(let i=1;i<=pdf.numPages;i++){
       const pg=await pdf.getPage(i);
       const ct=await pg.getTextContent();
-      // Get items with position info for better reconstruction
-      const items=ct.items;
-      let pageText='';
-      let lastY=null;
-      for(const item of items){
-        if(lastY!==null && Math.abs(item.transform[5]-lastY)>5){
-          pageText+='\n';
-        }
-        pageText+=item.str+(item.hasEOL?' ':' ');
+      let pageText='';let lastY=null;
+      for(const item of ct.items){
+        if(lastY!==null&&Math.abs(item.transform[5]-lastY)>5)pageText+='\n';
+        pageText+=item.str+' ';
         lastY=item.transform[5];
       }
       pages.push(pageText.trim());
     }
     const fullText=pages.join('\n\n--- PAGE BREAK ---\n\n');
-    console.log('Extracted text length:',fullText.length);
-    console.log('First 500 chars:',fullText.substring(0,500));
-    if(fullText.trim().length<30){
-      // Likely scanned - try image fallback
-      return {text:'[SCANNED - NO TEXT]', isImage:false, imageData:null};
-    }
-    return {text:fullText, isImage:false, imageData:null};
-  } else {
-    // Image file
+    return{text:fullText,isImage:false,imageData:null};
+  }else{
     return new Promise((res,rej)=>{
       const r=new FileReader();
       r.onload=e=>{
-        const dataUrl=e.target.result;
-        const mt=dataUrl.startsWith('data:image/png')?'image/png':'image/jpeg';
-        const b64=dataUrl.split(',')[1];
-        res({text:'',isImage:true,imageData:{mt,b64}});
+        const d=e.target.result;
+        const mt=d.startsWith('data:image/png')?'image/png':'image/jpeg';
+        res({text:'',isImage:true,imageData:{mt,b64:d.split(',')[1]}});
       };
-      r.onerror=()=>rej(new Error('Failed to read image'));
+      r.onerror=()=>rej(new Error('Failed to read file'));
       r.readAsDataURL(file);
     });
   }
 }
 
-async function callClaude(text, type, isImage, imageData){
-  const sysPrompt=`You are a Senior Quality & Regulatory Affairs Engineer at CCE Hanseatic Agri GmbH. 
-Your task: extract ALL data from supplier documents and reformat them to Hanseatic Agri corporate standards.
-CRITICAL RULES:
-1. ZERO HALLUCINATION: Only extract values explicitly stated. Use "N/A" for missing data.
-2. NEVER reveal supplier name, manufacturer, origin company, address, or any third-party branding.
-3. Remove any "Source:", "Prepared by:", or manufacturer references.
-4. For MSDS: Convert R-phrases to H-statements (CLP EC 1272/2008) where direct equivalence exists.
-5. Return ONLY valid JSON - no markdown, no explanation, no backticks.`;
-
+async function callClaude(text,type,isImage,imageData,key){
+  const sys=`You are a Senior Quality & Regulatory Affairs Engineer at CCE Hanseatic Agri GmbH. Extract ALL data from supplier documents. RULES: (1) Zero hallucination - use "N/A" if absent. (2) NEVER mention supplier/manufacturer/origin. (3) Return ONLY valid JSON, no markdown.`;
   const schemas={
-    COA:`{"product_name":"","batch_no":"","batch_size":"","man_date":"","exp_date":"","cas_number":"","conclusion":"","specifications":[{"item":"","specification":"","result":""}]}`,
-    TDS:`{"product_name":"","subtitle":"","cas_number":"","spec_number":"","rev":"","description":"","molecular_formula":"","molecular_weight":"","identification":"","analytical_constituents":[{"item":"","specification":""}],"heavy_metals":[{"item":"","specification":""}],"microbiology":[{"item":"","specification":""}],"characteristics":[{"item":"","value":""}],"nutritional_info":[{"item":"","value":""}],"uses":"","packaging":"","shelf_life":"","storage":""}`,
-    MSDS:`{"product_name":"","cas_number":"","synonym":"","chemical_formula":"","created":"","last_updated":"","s2":{"composition_table":[{"substance":"","cas":"","content":""}],"toxicological_data":""},"s3":{"acute_effects":"","carcinogenic":"","mutagenic":"","teratogenic":"","developmental_toxicity":"","other_chronic":""},"s4":{"eye_contact":"","skin_contact":"","serious_skin":"","inhalation":"","ingestion":""},"s5":{"flammability":"","auto_ignition":"","flash_points":"","combustion_products":"","firefighting_small":"","firefighting_large":""},"s6":{"small_spill":"","large_spill":""},"s7":{"precautions":"","storage":""},"s8":{"engineering_controls":"","personal_protection":"","large_spill_protection":"","exposure_limits":""},"s9":{"physical_state":"","odor":"","molecular_weight":"","color":"","ph":"","melting_point":"","vapor_pressure":"","solubility":""},"s10":{"stability":"","incompatibility":"","corrosivity":"","polymerization":""},"s11":{"routes_of_entry":"","toxicity_animals":"","chronic_effects":"","other_toxic":""},"s12":{"ecotoxicity":"","bod_cod":"","biodegradation":"","toxicity_biodeg":""},"s13":{"waste_disposal":""},"s14":{"dot_classification":"","identification":"","transport_provisions":""},"s15":{"osha":"","whmis":"","h_statements":"","hmis_health":"","hmis_fire":"","hmis_reactivity":"","hmis_protection":"","nfpa_health":"","nfpa_flammability":"","nfpa_reactivity":"","protective_equipment":""},"s16":{"additional_info":"","disclaimer":""}}`
+    COA:'{"product_name":"","batch_no":"","batch_size":"","man_date":"","exp_date":"","cas_number":"","conclusion":"","specifications":[{"item":"","specification":"","result":""}]}',
+    TDS:'{"product_name":"","subtitle":"","cas_number":"","spec_number":"","rev":"","description":"","molecular_formula":"","molecular_weight":"","identification":"","analytical_constituents":[{"item":"","specification":""}],"heavy_metals":[{"item":"","specification":""}],"microbiology":[{"item":"","specification":""}],"characteristics":[{"item":"","value":""}],"nutritional_info":[{"item":"","value":""}],"uses":"","packaging":"","shelf_life":"","storage":""}',
+    MSDS:'{"product_name":"","cas_number":"","synonym":"","chemical_formula":"","created":"","last_updated":"","s2":{"composition_table":[{"substance":"","cas":"","content":""}],"toxicological_data":""},"s3":{"acute_effects":"","carcinogenic":"","mutagenic":"","teratogenic":"","developmental_toxicity":"","other_chronic":""},"s4":{"eye_contact":"","skin_contact":"","serious_skin":"","inhalation":"","ingestion":""},"s5":{"flammability":"","auto_ignition":"","flash_points":"","combustion_products":"","firefighting_small":"","firefighting_large":""},"s6":{"small_spill":"","large_spill":""},"s7":{"precautions":"","storage":""},"s8":{"engineering_controls":"","personal_protection":"","large_spill_protection":"","exposure_limits":""},"s9":{"physical_state":"","odor":"","molecular_weight":"","color":"","ph":"","melting_point":"","vapor_pressure":"","solubility":""},"s10":{"stability":"","incompatibility":"","corrosivity":"","polymerization":""},"s11":{"routes_of_entry":"","toxicity_animals":"","chronic_effects":"","other_toxic":""},"s12":{"ecotoxicity":"","bod_cod":"","biodegradation":"","toxicity_biodeg":""},"s13":{"waste_disposal":""},"s14":{"dot_classification":"","identification":"","transport_provisions":""},"s15":{"osha":"","whmis":"","h_statements":"","hmis_health":"","hmis_fire":"","hmis_reactivity":"","hmis_protection":"","nfpa_health":"","nfpa_flammability":"","nfpa_reactivity":"","protective_equipment":""},"s16":{"additional_info":"","disclaimer":""}}'
   };
-
-  const userText=`Extract all data from this ${type} document and return JSON matching this schema exactly:\n${schemas[type]}\n\nDocument content:\n${text}`;
-
-  const body={model:'claude-sonnet-4-6',max_tokens:4000,system:sysPrompt,messages:[]};
-
+  const body={model:'claude-sonnet-4-6',max_tokens:4000,system:sys,messages:[]};
   if(isImage&&imageData){
     body.messages=[{role:'user',content:[
       {type:'image',source:{type:'base64',media_type:imageData.mt,data:imageData.b64}},
-      {type:'text',text:`Extract all data from this ${type} document image and return JSON matching this schema:\n${schemas[type]}`}
+      {type:'text',text:'Extract all data from this '+type+' document. Return JSON matching this schema:\n'+schemas[type]}
     ]}];
-  } else {
-    body.messages=[{role:'user',content:userText}];
+  }else{
+    body.messages=[{role:'user',content:'Extract all data from this '+type+' document and return JSON matching this schema:\n'+schemas[type]+'\n\nDocument:\n'+text}];
   }
-
   const resp=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
     body:JSON.stringify(body)
   });
-  if(!resp.ok){const e=await resp.text();throw new Error('API '+resp.status+': '+e.slice(0,300));}
+  if(!resp.ok){const e=await resp.text();throw new Error('API '+resp.status+': '+e.slice(0,200));}
   const data=await resp.json();
-  let raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-  raw=raw.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-  try{return JSON.parse(raw);}
-  catch(e){console.error('Raw response:',raw);throw new Error('JSON parse failed. Raw: '+raw.slice(0,200));}
+  let raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('').replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+  try{return JSON.parse(raw);}catch(e){throw new Error('Parse failed: '+raw.slice(0,100));}
 }
 
 // ---- EDIT PANEL ----
 function buildReview(d,type){
-  const ep=document.getElementById('editpanel');ep.innerHTML='';
-  if(type==='COA')buildCOAEdit(d,ep);
-  else if(type==='TDS')buildTDSEdit(d,ep);
-  else buildMSDSEdit(d,ep);
+  document.getElementById('editpanel').innerHTML='';
+  if(type==='COA')buildCOAEdit(d);
+  else if(type==='TDS')buildTDSEdit(d);
+  else buildMSDSEdit(d);
   renderPrev(d,type);
 }
 function renderPrev(d,type){
@@ -341,28 +367,65 @@ function mkRow2(ep,obj,c1,c2,onCh,onRm){
   const rm=document.createElement('button');rm.className='rmvbtn';rm.textContent='×';rm.onclick=onRm;ep.appendChild(d);
 }
 
-function buildCOAEdit(d,ep){
+function buildCOAEdit(d){
+  const ep=document.getElementById('editpanel');
   [['product_name','Product Name'],['batch_no','Batch No.'],['batch_size','Batch Size'],['man_date','MAN Date'],['exp_date','EXP Date'],['cas_number','CAS Number'],['conclusion','Conclusion']].forEach(([k,l])=>fld(ep,l,d[k],v=>{d[k]=v;}));
   sect(ep,'Test Results (Item / Specification / Result)');
-  function rf(){ep.querySelectorAll('.cr').forEach(e=>e.remove());const ab=ep.querySelector('[data-ab="coa"]');(d.specifications||[]).forEach((row,i)=>{const w=document.createElement('div');w.className='cr';mkRow3(w,row,'item','specification','result',()=>renderPrev(d,'COA'),()=>{d.specifications.splice(i,1);rf();renderPrev(d,'COA');});ep.insertBefore(w,ab);});}
-  const ab=document.createElement('button');ab.className='addbtn';ab.setAttribute('data-ab','coa');ab.textContent='+ Add row';ab.onclick=()=>{if(!d.specifications)d.specifications=[];d.specifications.push({item:'',specification:'',result:''});rf();renderPrev(d,'COA');};ep.appendChild(ab);rf();
+  function rf(){
+    ep.querySelectorAll('.cr').forEach(e=>e.remove());
+    const ab=ep.querySelector('[data-ab="coa"]');
+    (d.specifications||[]).forEach((row,i)=>{
+      const w=document.createElement('div');w.className='cr';
+      mkRow3(w,row,'item','specification','result',()=>renderPrev(d,'COA'),()=>{d.specifications.splice(i,1);rf();renderPrev(d,'COA');});
+      ep.insertBefore(w,ab);
+    });
+  }
+  const ab=document.createElement('button');ab.className='addbtn';ab.setAttribute('data-ab','coa');ab.textContent='+ Add row';
+  ab.onclick=()=>{if(!d.specifications)d.specifications=[];d.specifications.push({item:'',specification:'',result:''});rf();renderPrev(d,'COA');};
+  ep.appendChild(ab);rf();
 }
-function buildTDSEdit(d,ep){
+
+function buildTDSEdit(d){
+  const ep=document.getElementById('editpanel');
   [['product_name','Product Name'],['subtitle','Subtitle'],['cas_number','CAS Number'],['spec_number','Spec No.'],['rev','Revision'],['description','Description'],['molecular_formula','Mol. Formula'],['molecular_weight','Mol. Weight'],['identification','Identification'],['uses','Uses'],['packaging','Packaging'],['shelf_life','Shelf Life'],['storage','Storage']].forEach(([k,l])=>fld(ep,l,d[k],v=>{d[k]=v;},['description','uses','identification','packaging','storage'].includes(k)));
   [['analytical_constituents','Analytical Constituents','specification'],['heavy_metals','Heavy Metals','specification'],['microbiology','Microbiology','specification'],['characteristics','Characteristics','value'],['nutritional_info','Nutritional Info','value']].forEach(([key,title,c2])=>{
     sect(ep,title);
-    function rf(){ep.querySelectorAll('.tr-'+key).forEach(e=>e.remove());const ab=ep.querySelector('[data-ab="'+key+'"]');(d[key]||[]).forEach((row,i)=>{const w=document.createElement('div');w.className='tr-'+key;mkRow2(w,row,'item',c2,()=>renderPrev(d,'TDS'),()=>{d[key].splice(i,1);rf();renderPrev(d,'TDS');});ep.insertBefore(w,ab);});}
-    const ab=document.createElement('button');ab.className='addbtn';ab.setAttribute('data-ab',key);ab.textContent='+ Add row';ab.onclick=()=>{if(!d[key])d[key]=[];const nr={item:''};nr[c2]='';d[key].push(nr);rf();renderPrev(d,'TDS');};ep.appendChild(ab);rf();
+    function rf(){
+      ep.querySelectorAll('.tr-'+key).forEach(e=>e.remove());
+      const ab=ep.querySelector('[data-ab="'+key+'"]');
+      (d[key]||[]).forEach((row,i)=>{
+        const w=document.createElement('div');w.className='tr-'+key;
+        mkRow2(w,row,'item',c2,()=>renderPrev(d,'TDS'),()=>{d[key].splice(i,1);rf();renderPrev(d,'TDS');});
+        ep.insertBefore(w,ab);
+      });
+    }
+    const ab=document.createElement('button');ab.className='addbtn';ab.setAttribute('data-ab',key);ab.textContent='+ Add row';
+    ab.onclick=()=>{if(!d[key])d[key]=[];const nr={item:''};nr[c2]='';d[key].push(nr);rf();renderPrev(d,'TDS');};
+    ep.appendChild(ab);rf();
   });
 }
-function buildMSDSEdit(d,ep){
+
+function buildMSDSEdit(d){
+  const ep=document.getElementById('editpanel');
   [['product_name','Product Name'],['cas_number','CAS Number'],['synonym','Synonym'],['chemical_formula','Chemical Formula'],['created','Created'],['last_updated','Last Updated']].forEach(([k,l])=>fld(ep,l,d[k],v=>{d[k]=v;}));
   sect(ep,'Section 2 - Composition');
   const s2=d.s2||(d.s2={composition_table:[]});if(!s2.composition_table)s2.composition_table=[];
-  function rfComp(){ep.querySelectorAll('.mc').forEach(e=>e.remove());const ab=ep.querySelector('[data-ab="mc"]');s2.composition_table.forEach((row,i)=>{const w=document.createElement('div');w.className='mc';mkRow3(w,row,'substance','cas','content',()=>renderPrev(d,'MSDS'),()=>{s2.composition_table.splice(i,1);rfComp();renderPrev(d,'MSDS');});ep.insertBefore(w,ab);});}
-  const mcab=document.createElement('button');mcab.className='addbtn';mcab.setAttribute('data-ab','mc');mcab.textContent='+ Add row';mcab.onclick=()=>{s2.composition_table.push({substance:'',cas:'',content:''});rfComp();renderPrev(d,'MSDS');};ep.appendChild(mcab);rfComp();
-  const secs=[['s3','Section 3 - Hazards',[['acute_effects','Acute Effects'],['carcinogenic','Carcinogenic'],['mutagenic','Mutagenic'],['teratogenic','Teratogenic'],['other_chronic','Other Chronic']]],['s4','Section 4 - First Aid',[['eye_contact','Eye Contact'],['skin_contact','Skin Contact'],['serious_skin','Serious Skin'],['inhalation','Inhalation'],['ingestion','Ingestion']]],['s5','Section 5 - Fire',[['flammability','Flammability'],['combustion_products','Combustion Products'],['firefighting_small','Small Fire'],['firefighting_large','Large Fire']]],['s6','Section 6 - Spills',[['small_spill','Small Spill'],['large_spill','Large Spill']]],['s7','Section 7 - Handling',[['precautions','Precautions'],['storage','Storage']]],['s8','Section 8 - PPE',[['engineering_controls','Engineering Controls'],['personal_protection','Personal Protection'],['large_spill_protection','Large Spill PPE'],['exposure_limits','Exposure Limits']]],['s9','Section 9 - Physical',[['physical_state','Physical State'],['color','Color'],['odor','Odor'],['molecular_weight','Mol. Weight'],['ph','pH'],['melting_point','Melting Point'],['solubility','Solubility']]],['s10','Section 10 - Stability',[['stability','Stability'],['incompatibility','Incompatibility'],['corrosivity','Corrosivity'],['polymerization','Polymerization']]],['s11','Section 11 - Toxicology',[['routes_of_entry','Routes of Entry'],['toxicity_animals','Toxicity Animals'],['chronic_effects','Chronic Effects'],['other_toxic','Other Toxic']]],['s12','Section 12 - Ecology',[['ecotoxicity','Ecotoxicity'],['biodegradation','Biodegradation']]],['s13','Section 13 - Disposal',[['waste_disposal','Waste Disposal']]],['s14','Section 14 - Transport',[['dot_classification','DOT Class.'],['transport_provisions','Transport Provisions']]],['s15','Section 15 - Regulations',[['osha','OSHA'],['whmis','WHMIS'],['h_statements','H-Statements (CLP)'],['hmis_health','HMIS Health'],['hmis_fire','HMIS Fire'],['nfpa_health','NFPA Health'],['nfpa_flammability','NFPA Flammability'],['protective_equipment','Protective Equipment']]],['s16','Section 16 - Additional',[['additional_info','Additional Info'],['disclaimer','Disclaimer']]]];
-  secs.forEach(([sk,title,fields])=>{sect(ep,title);if(!d[sk])d[sk]={};fields.forEach(([fk,fl])=>fld(ep,fl,(d[sk]||{})[fk],v=>{if(!d[sk])d[sk]={};d[sk][fk]=v;},true));});
+  function rfC(){
+    ep.querySelectorAll('.mc').forEach(e=>e.remove());
+    const ab=ep.querySelector('[data-ab="mc"]');
+    s2.composition_table.forEach((row,i)=>{
+      const w=document.createElement('div');w.className='mc';
+      mkRow3(w,row,'substance','cas','content',()=>renderPrev(d,'MSDS'),()=>{s2.composition_table.splice(i,1);rfC();renderPrev(d,'MSDS');});
+      ep.insertBefore(w,ab);
+    });
+  }
+  const mcab=document.createElement('button');mcab.className='addbtn';mcab.setAttribute('data-ab','mc');mcab.textContent='+ Add row';
+  mcab.onclick=()=>{s2.composition_table.push({substance:'',cas:'',content:''});rfC();renderPrev(d,'MSDS');};
+  ep.appendChild(mcab);rfC();
+  [['s3','Section 3 - Hazards',[['acute_effects','Acute Effects'],['carcinogenic','Carcinogenic'],['mutagenic','Mutagenic'],['teratogenic','Teratogenic'],['other_chronic','Other Chronic']]],['s4','Section 4 - First Aid',[['eye_contact','Eye Contact'],['skin_contact','Skin Contact'],['serious_skin','Serious Skin'],['inhalation','Inhalation'],['ingestion','Ingestion']]],['s5','Section 5 - Fire',[['flammability','Flammability'],['combustion_products','Combustion Products'],['firefighting_small','Small Fire'],['firefighting_large','Large Fire']]],['s6','Section 6 - Spills',[['small_spill','Small Spill'],['large_spill','Large Spill']]],['s7','Section 7 - Handling',[['precautions','Precautions'],['storage','Storage']]],['s8','Section 8 - PPE',[['engineering_controls','Engineering Controls'],['personal_protection','Personal Protection'],['large_spill_protection','Large Spill PPE'],['exposure_limits','Exposure Limits']]],['s9','Section 9 - Physical',[['physical_state','Physical State'],['color','Color'],['odor','Odor'],['molecular_weight','Mol. Weight'],['ph','pH'],['melting_point','Melting Point'],['solubility','Solubility']]],['s10','Section 10 - Stability',[['stability','Stability'],['incompatibility','Incompatibility'],['corrosivity','Corrosivity'],['polymerization','Polymerization']]],['s11','Section 11 - Toxicology',[['routes_of_entry','Routes of Entry'],['toxicity_animals','Toxicity Animals'],['chronic_effects','Chronic Effects'],['other_toxic','Other Toxic']]],['s12','Section 12 - Ecology',[['ecotoxicity','Ecotoxicity'],['biodegradation','Biodegradation']]],['s13','Section 13 - Disposal',[['waste_disposal','Waste Disposal']]],['s14','Section 14 - Transport',[['dot_classification','DOT Class.'],['transport_provisions','Transport Provisions']]],['s15','Section 15 - Regulations',[['osha','OSHA'],['whmis','WHMIS'],['h_statements','H-Statements (CLP)'],['hmis_health','HMIS Health'],['hmis_fire','HMIS Fire'],['nfpa_health','NFPA Health'],['nfpa_flammability','NFPA Flammability'],['protective_equipment','Protective Equipment']]],['s16','Section 16 - Additional',[['additional_info','Additional Info'],['disclaimer','Disclaimer']]]].forEach(([sk,title,fields])=>{
+    sect(ep,title);if(!d[sk])d[sk]={};
+    fields.forEach(([fk,fl])=>fld(ep,fl,(d[sk]||{})[fk],v=>{if(!d[sk])d[sk]={};d[sk][fk]=v;},true));
+  });
 }
 
 // ---- HTML RENDERERS ----
@@ -391,10 +454,8 @@ function tdsHTML(d){
   const ts=(title,arr,c2)=>{if(!arr||!arr.length)return'';return`<div class="dst">${title}</div>${tbl(['Parameter','Value / Specification'],arr.map(r=>[r.item||'',r[c2]||'']))}`;}
   return`<div class="dp">${DH('Technical Data Sheet',d.subtitle||'')}
 ${d.spec_number||d.rev?`<div style="display:flex;justify-content:space-between;font-size:8pt;color:#777;margin-bottom:8px"><span>${d.spec_number?'Spec No. '+d.spec_number:''}</span><span>${d.rev||''}</span></div>`:''}
-<div class="dst">Product</div>
-<p style="font-size:9pt;line-height:1.5;margin-bottom:6px">${na(d.description)}</p>
-<div class="dst">Identification</div>
-${tbl(['Parameter','Value'],[['Molecular formula',na(d.molecular_formula)],['Molecular weight',na(d.molecular_weight)],['CAS Number',na(d.cas_number)],['Identification',na(d.identification)]])}
+<div class="dst">Product</div><p style="font-size:9pt;line-height:1.5;margin-bottom:6px">${na(d.description)}</p>
+<div class="dst">Identification</div>${tbl(['Parameter','Value'],[['Molecular formula',na(d.molecular_formula)],['Molecular weight',na(d.molecular_weight)],['CAS Number',na(d.cas_number)],['Identification',na(d.identification)]])}
 ${ts('Analytical Constituents',d.analytical_constituents,'specification')}
 ${ts('Heavy Metals',d.heavy_metals,'specification')}
 ${ts('Microbiology',d.microbiology,'specification')}
@@ -410,10 +471,10 @@ function msdsHTML(d){
   const sec=(n,t,h)=>`<div class="dst">Section ${n}: ${t}</div>${h}`;
   const sub=t=>`<div class="msb">${t}</div>`;
   const txt=t=>`<div class="mst">${t||'N/A'}</div>`;
-  const compRows=(s2.composition_table||[]).map(r=>`<tr><td>${r.substance||''}</td><td>${r.cas||''}</td><td>${r.content||''}</td></tr>`).join('');
+  const cR=(s2.composition_table||[]).map(r=>`<tr><td>${r.substance||''}</td><td>${r.cas||''}</td><td>${r.content||''}</td></tr>`).join('');
   return`<div class="dp">${DH('Material Safety Data Sheet','According to Regulation (EC) No. 1907/2006')}
 ${sec(1,'Chemical Product and Company Identification',`<div class="mst"><b>Company Name:</b> CCE Hanseatic Agri GmbH<br><b>Address:</b> Tempowerkring 6, 21079 Hamburg<br><b>Product Name:</b> ${d.product_name||'N/A'}<br><b>CAS#:</b> ${d.cas_number||'N/A'}${d.synonym&&d.synonym!=='N/A'?`<br><b>Synonym:</b> ${d.synonym}`:''}${d.chemical_formula&&d.chemical_formula!=='N/A'?`<br><b>Chemical Formula:</b> ${d.chemical_formula}`:''}<br><b>Tel:</b> +49 (0)40 537997770 &nbsp;<b>Fax:</b> +49 (0) 40 537 99 77 73<br><b>Emergency:</b> Poison Information Centre North, Phone: +49 551 19 24 0</div>`)}
-${sec(2,'Composition and Information on Ingredients',`${sub('Composition')}<table class="ctb"><thead><tr><th>Substance</th><th>CAS No.</th><th>Content (%)</th></tr></thead><tbody>${compRows||'<tr><td colspan="3">N/A</td></tr>'}</tbody></table>${s2.toxicological_data&&s2.toxicological_data!=='N/A'?sub('Toxicological Data on Ingredients')+txt(s2.toxicological_data):''}`)}
+${sec(2,'Composition and Information on Ingredients',`${sub('Composition')}<table class="ctb"><thead><tr><th>Substance</th><th>CAS No.</th><th>Content (%)</th></tr></thead><tbody>${cR||'<tr><td colspan="3">N/A</td></tr>'}</tbody></table>${s2.toxicological_data&&s2.toxicological_data!=='N/A'?sub('Toxicological Data')+txt(s2.toxicological_data):''}`)}
 ${sec(3,'Hazards Identification',`${sub('Potential Acute Health Effects')}${txt(s3.acute_effects)}${sub('Potential Chronic Health Effects')}<div class="mst">CARCINOGENIC EFFECTS: ${s3.carcinogenic||'N/A'}<br>MUTAGENIC EFFECTS: ${s3.mutagenic||'N/A'}<br>TERATOGENIC EFFECTS: ${s3.teratogenic||'N/A'}<br>DEVELOPMENTAL TOXICITY: ${s3.developmental_toxicity||'N/A'}${s3.other_chronic&&s3.other_chronic!=='N/A'?`<br>${s3.other_chronic}`:''}</div>`)}
 ${sec(4,'First Aid Measures',`${sub('Eye Contact')}${txt(s4.eye_contact)}${sub('Skin Contact')}${txt(s4.skin_contact)}${s4.serious_skin&&s4.serious_skin!=='N/A'?sub('Serious Skin Contact')+txt(s4.serious_skin):''}${sub('Inhalation')}${txt(s4.inhalation)}${sub('Ingestion')}${txt(s4.ingestion)}`)}
 ${sec(5,'Fire and Explosion Data',`<div class="mst"><b>Flammability:</b> ${s5.flammability||'N/A'}<br><b>Auto-Ignition:</b> ${s5.auto_ignition||'N/A'}<br><b>Flash Points:</b> ${s5.flash_points||'N/A'}<br><b>Products of Combustion:</b> ${s5.combustion_products||'N/A'}</div>${s5.firefighting_small?`${sub('Fire Fighting')}<div class="mst"><b>SMALL FIRE:</b> ${s5.firefighting_small}<br><b>LARGE FIRE:</b> ${s5.firefighting_large||'N/A'}</div>`:''}`)}
@@ -422,7 +483,7 @@ ${sec(7,'Handling and Storage',`${sub('Precautions')}${txt(s7.precautions)}${sub
 ${sec(8,'Exposure Controls / Personal Protection',`${sub('Engineering Controls')}${txt(s8.engineering_controls)}${sub('Personal Protection')}${txt(s8.personal_protection)}${s8.large_spill_protection&&s8.large_spill_protection!=='N/A'?sub('Personal Protection - Large Spill')+txt(s8.large_spill_protection):''}<div class="mst"><b>Exposure Limits:</b> ${s8.exposure_limits||'N/A'}</div>`)}
 ${sec(9,'Physical and Chemical Properties',tbl(['Property','Value'],[['Physical state',s9.physical_state||'N/A'],['Color',s9.color||'N/A'],['Odor',s9.odor||'N/A'],['Molecular Weight',s9.molecular_weight||'N/A'],['pH (1% soln/water)',s9.ph||'N/A'],['Melting Point',s9.melting_point||'N/A'],['Vapor Pressure',s9.vapor_pressure||'N/A'],['Solubility',s9.solubility||'N/A']]))}
 ${sec(10,'Stability and Reactivity Data',`<div class="mst"><b>Stability:</b> ${s10.stability||'N/A'}<br><b>Incompatibility:</b> ${s10.incompatibility||'N/A'}<br><b>Corrosivity:</b> ${s10.corrosivity||'N/A'}<br><b>Polymerization:</b> ${s10.polymerization||'N/A'}</div>`)}
-${sec(11,'Toxicological Information',`<div class="mst"><b>Routes of Entry:</b> ${s11.routes_of_entry||'N/A'}<br><b>Toxicity to Animals:</b> ${s11.toxicity_animals||'N/A'}<br><b>Chronic Effects on Humans:</b> ${s11.chronic_effects||'N/A'}<br><b>Other Toxic Effects:</b> ${s11.other_toxic||'N/A'}</div>`)}
+${sec(11,'Toxicological Information',`<div class="mst"><b>Routes of Entry:</b> ${s11.routes_of_entry||'N/A'}<br><b>Toxicity to Animals:</b> ${s11.toxicity_animals||'N/A'}<br><b>Chronic Effects:</b> ${s11.chronic_effects||'N/A'}<br><b>Other Toxic Effects:</b> ${s11.other_toxic||'N/A'}</div>`)}
 ${sec(12,'Ecological Information',`<div class="mst"><b>Ecotoxicity:</b> ${s12.ecotoxicity||'N/A'}<br><b>BOD5 and COD:</b> ${s12.bod_cod||'N/A'}<br><b>Biodegradation:</b> ${s12.biodegradation||'N/A'}<br><b>Toxicity of Biodeg. Products:</b> ${s12.toxicity_biodeg||'N/A'}</div>`)}
 ${sec(13,'Disposal Considerations',`<div class="mst"><b>Waste Disposal:</b> ${s13.waste_disposal||'N/A'}</div>`)}
 ${sec(14,'Transport Information',`<div class="mst"><b>DOT Classification:</b> ${s14.dot_classification||'N/A'}<br><b>Identification:</b> ${s14.identification||'N/A'}<br><b>Special Provisions:</b> ${s14.transport_provisions||'N/A'}</div>`)}
@@ -438,45 +499,18 @@ function doDownload(){
   try{
     const docHTML=document.getElementById('prev-wrap').innerHTML;
     const fname=((extractedData.product_name||'document').replace(/[^a-zA-Z0-9]/g,'_').slice(0,40))+'_'+docType+'.html';
-    const printCSS=`
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Times New Roman',Times,serif;font-size:10pt;color:#000;background:#fff;padding:12mm 15mm}
-.dp{} .dh{display:flex;justify-content:space-between;align-items:flex-start;border:2px solid #1a5c2a;padding:9px 12px;margin-bottom:14px}
-.dh-l{font-size:11pt;font-weight:700} .dh-sub{font-size:8.5pt;font-style:italic;color:#444;font-weight:400} .dh-co{font-size:7.5pt;color:#666;margin-top:2px}
-.dmt{width:100%;border-collapse:collapse;margin-bottom:11px;font-size:9.5pt} .dmt td{padding:2px 4px} .dmt td:first-child{font-weight:700;width:120px}
-.dst{color:#1a5c2a;font-weight:700;font-size:9.5pt;margin:10px 0 3px;padding-bottom:2px;border-bottom:1.5px solid #1a5c2a}
-.dtb{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px}
-.dtb th{background:#1a5c2a!important;color:#fff!important;padding:5px 8px;text-align:left;font-size:9.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.dtb td{padding:4px 8px;border-bottom:.5px solid #ccc;vertical-align:top}
-.dtb tr:nth-child(even) td{background:#f4f8f4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.dcon{margin-top:10px;font-weight:700;font-size:10pt}
-.dft{margin-top:14px;border-top:1px solid #1a5c2a;padding-top:5px;font-size:7pt;color:#444;text-align:center}
-.ctb{width:100%;border-collapse:collapse;font-size:8.5pt;margin:4px 0 8px}
-.ctb th{background:#1a5c2a!important;color:#fff!important;padding:4px 6px;font-size:8pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.ctb td{padding:3px 6px;border-bottom:.5px solid #ccc}
-.mst{font-size:9pt;line-height:1.5;margin-bottom:3px} .msb{font-weight:700;font-size:9pt;margin:5px 0 2px}
-#prtbtn{position:fixed;top:14px;right:14px;background:#1a5c2a;color:#fff;border:none;padding:10px 20px;font-size:14px;font-weight:700;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-@media print{#prtbtn{display:none!important} @page{margin:10mm 14mm;size:A4}}`;
-
-    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${fname}</title>
-<style>${printCSS}</style></head>
-<body>
-<button id="prtbtn" onclick="this.style.display='none';window.print();setTimeout(()=>this.style.display='block',1000)">🖨 Print / Save as PDF</button>
-${docHTML}
-</body></html>`;
-
+    const css=`.dp{padding:12mm 15mm} .dh{display:flex;justify-content:space-between;align-items:flex-start;border:2px solid #1a5c2a;padding:9px 12px;margin-bottom:14px} .dh-l{font-size:11pt;font-weight:700} .dh-sub{font-size:8.5pt;font-style:italic;color:#444;font-weight:400} .dh-co{font-size:7.5pt;color:#666;margin-top:2px} .logo-ph{width:150px;height:55px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:9pt;font-family:Arial,sans-serif;flex-shrink:0} .dmt{width:100%;border-collapse:collapse;margin-bottom:11px;font-size:9.5pt} .dmt td{padding:2px 5px} .dmt td:first-child{font-weight:700;width:120px} .dst{color:#1a5c2a;font-weight:700;font-size:9.5pt;margin:10px 0 3px;padding-bottom:2px;border-bottom:1.5px solid #1a5c2a} .dtb{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px} .dtb th{background:#1a5c2a!important;color:#fff!important;padding:5px 8px;text-align:left;font-size:9.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact} .dtb td{padding:4px 8px;border-bottom:.5px solid #ccc;vertical-align:top} .dtb tr:nth-child(even) td{background:#f4f8f4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact} .dcon{margin-top:10px;font-weight:700;font-size:10pt} .dft{margin-top:14px;border-top:1px solid #1a5c2a;padding-top:5px;font-size:7pt;color:#444;text-align:center} .ctb{width:100%;border-collapse:collapse;font-size:9pt;margin:4px 0 8px} .ctb th{background:#1a5c2a!important;color:#fff!important;padding:4px 7px;font-size:8.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact} .ctb td{padding:3px 7px;border-bottom:.5px solid #ccc} .mst{font-size:9pt;line-height:1.5;margin-bottom:3px} .msb{font-weight:700;font-size:9pt;margin:5px 0 2px} #pb{position:fixed;top:14px;right:14px;background:#1a5c2a;color:#fff;border:none;padding:10px 20px;font-size:14px;font-weight:700;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;z-index:999} @media print{#pb{display:none!important} @page{margin:10mm 14mm;size:A4}}`;
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${fname}</title><style>*{box-sizing:border-box;margin:0;padding:0} body{font-family:'Times New Roman',Times,serif;font-size:10pt;color:#000;background:#fff} ${css}</style></head><body><button id="pb" onclick="this.style.display='none';window.print();setTimeout(()=>this.style.display='block',1000)">🖨 Print / Save as PDF</button>${docHTML}</body></html>`;
     const blob=new Blob([html],{type:'text/html;charset=utf-8'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;a.download=fname;
+    const a=document.createElement('a');a.href=url;a.download=fname;
     document.body.appendChild(a);a.click();
     setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},2000);
-    btn.textContent='✓ Downloaded! Open the file and click Print → Save as PDF';
-    setTimeout(()=>{btn.textContent='⬇ Download HTML (open & Print→PDF)';btn.disabled=false;},5000);
+    btn.textContent='✓ Downloaded! Open file → Print → Save as PDF';
+    setTimeout(()=>{btn.textContent='⬇ Download HTML';btn.disabled=false;},4000);
   }catch(err){
-    alert('Download error: '+err.message);
-    btn.textContent='⬇ Download HTML (open & Print→PDF)';
-    btn.disabled=false;
+    alert('Error: '+err.message);
+    btn.textContent='⬇ Download HTML';btn.disabled=false;
   }
 }
 
@@ -484,12 +518,20 @@ function goHome(){
   docType=null;uploadedFile=null;extractedData=null;
   document.getElementById('fi').value='';
   const fc=document.getElementById('fclbl');fc.textContent='';fc.style.display='none';
-  document.getElementById('procbtn').disabled=true;
   document.getElementById('errmsg').style.display='none';
   ['COA','TDS','MSDS'].forEach(x=>document.getElementById('bt-'+x).classList.remove('sel'));
   show('scr-up');setStep(1);
 }
+
+// INIT
 show('scr-up');
+const _k=sessionStorage.getItem('ha_key');
+if(_k){
+  _apiKey=_k;
+  document.getElementById('apistatus').textContent='✓ Key loaded from session.';
+  document.getElementById('apistatus').style.color='#1a5c2a';
+  document.getElementById('keyinp').value='sk-ant-...saved';
+}
 </script>
 </body>
 </html>
