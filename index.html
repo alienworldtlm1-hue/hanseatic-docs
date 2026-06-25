@@ -310,18 +310,57 @@ async function readFile(file){
 async function callClaude(text,type,isImage,imageData,key){
   const sys=`You are a Senior Quality & Regulatory Affairs Engineer at CCE Hanseatic Agri GmbH. Extract ALL data from supplier documents. RULES: (1) Zero hallucination - use "N/A" if absent. (2) NEVER mention supplier/manufacturer/origin. (3) Return ONLY valid JSON, no markdown.`;
   const schemas={
-    COA:'{"product_name":"","batch_no":"","batch_size":"","man_date":"","exp_date":"","cas_number":"","conclusion":"","specifications":[{"item":"","specification":"","result":""}]}',
-    TDS:'{"product_name":"","subtitle":"","cas_number":"","spec_number":"","rev":"","description":"","molecular_formula":"","molecular_weight":"","identification":"","analytical_constituents":[{"item":"","specification":""}],"heavy_metals":[{"item":"","specification":""}],"microbiology":[{"item":"","specification":""}],"characteristics":[{"item":"","value":""}],"nutritional_info":[{"item":"","value":""}],"uses":"","packaging":"","shelf_life":"","storage":""}',
-    MSDS:'{"product_name":"","cas_number":"","synonym":"","chemical_formula":"","created":"","last_updated":"","s2":{"composition_table":[{"substance":"","cas":"","content":""}],"toxicological_data":""},"s3":{"acute_effects":"","carcinogenic":"","mutagenic":"","teratogenic":"","developmental_toxicity":"","other_chronic":""},"s4":{"eye_contact":"","skin_contact":"","serious_skin":"","inhalation":"","ingestion":""},"s5":{"flammability":"","auto_ignition":"","flash_points":"","combustion_products":"","firefighting_small":"","firefighting_large":""},"s6":{"small_spill":"","large_spill":""},"s7":{"precautions":"","storage":""},"s8":{"engineering_controls":"","personal_protection":"","large_spill_protection":"","exposure_limits":""},"s9":{"physical_state":"","odor":"","molecular_weight":"","color":"","ph":"","melting_point":"","vapor_pressure":"","solubility":""},"s10":{"stability":"","incompatibility":"","corrosivity":"","polymerization":""},"s11":{"routes_of_entry":"","toxicity_animals":"","chronic_effects":"","other_toxic":""},"s12":{"ecotoxicity":"","bod_cod":"","biodegradation":"","toxicity_biodeg":""},"s13":{"waste_disposal":""},"s14":{"dot_classification":"","identification":"","transport_provisions":""},"s15":{"osha":"","whmis":"","h_statements":"","hmis_health":"","hmis_fire":"","hmis_reactivity":"","hmis_protection":"","nfpa_health":"","nfpa_flammability":"","nfpa_reactivity":"","protective_equipment":""},"s16":{"additional_info":"","disclaimer":""}}'
+    COA:`You are extracting data from a Certificate of Analysis. The document may have 3 or 4 columns (Item/Specification/Method/Result or similar). Extract ALL test parameters you can find.
+
+CRITICAL RULES:
+- Zero hallucination: only extract what is explicitly written
+- NEVER mention supplier name, manufacturer, or origin company
+- The "batch size" may also appear as "quantity"
+- The "man_date" may appear as "MFG DATE" or "manufacture date" or "preparation date"  
+- The "exp_date" may appear as "EXP DATE" or "expiry date" or "shelf life"
+- For specifications column: include the limit value (e.g. "NMT 1000 cfu/g", "90.0% min", "Between 5.5 and 7.5")
+- For results column: include the actual measured value (e.g. "<100 cfu/g", "91.4%", "6.8")
+- If you see "Complies" as a result, use "Complies"
+- Extract EVERY row from the test table, even if there are 15-20 rows
+- Return ONLY valid JSON, no markdown, no explanation
+
+JSON schema:
+{"product_name":"","batch_no":"","batch_size":"","man_date":"","exp_date":"","cas_number":"","conclusion":"","specifications":[{"item":"","specification":"","result":""}]}
+
+Document:`,
+    TDS:`You are extracting data from a Technical Data Sheet. 
+
+CRITICAL RULES:
+- Zero hallucination: only extract what is explicitly written
+- NEVER mention supplier name, manufacturer, or origin company  
+- Extract ALL parameters from specification tables
+- Return ONLY valid JSON, no markdown, no explanation
+
+JSON schema:
+{"product_name":"","subtitle":"","cas_number":"","spec_number":"","rev":"","description":"","molecular_formula":"","molecular_weight":"","identification":"","analytical_constituents":[{"item":"","specification":""}],"heavy_metals":[{"item":"","specification":""}],"microbiology":[{"item":"","specification":""}],"characteristics":[{"item":"","value":""}],"nutritional_info":[{"item":"","value":""}],"uses":"","packaging":"","shelf_life":"","storage":""}
+
+Document:`,
+    MSDS:`You are extracting data from a Material Safety Data Sheet following EU Regulation (EC) No. 1907/2006.
+
+CRITICAL RULES:
+- Zero hallucination: only extract what is explicitly written
+- NEVER mention supplier name, manufacturer, origin company, or source - remove any such references completely
+- Convert R-phrases to H-statements (CLP EC 1272/2008) where direct equivalence exists, otherwise use "N/A"
+- Return ONLY valid JSON, no markdown, no explanation
+
+JSON schema:
+{"product_name":"","cas_number":"","synonym":"","chemical_formula":"","created":"","last_updated":"","s2":{"composition_table":[{"substance":"","cas":"","content":""}],"toxicological_data":""},"s3":{"acute_effects":"","carcinogenic":"","mutagenic":"","teratogenic":"","developmental_toxicity":"","other_chronic":""},"s4":{"eye_contact":"","skin_contact":"","serious_skin":"","inhalation":"","ingestion":""},"s5":{"flammability":"","auto_ignition":"","flash_points":"","combustion_products":"","firefighting_small":"","firefighting_large":""},"s6":{"small_spill":"","large_spill":""},"s7":{"precautions":"","storage":""},"s8":{"engineering_controls":"","personal_protection":"","large_spill_protection":"","exposure_limits":""},"s9":{"physical_state":"","odor":"","molecular_weight":"","color":"","ph":"","melting_point":"","vapor_pressure":"","solubility":""},"s10":{"stability":"","incompatibility":"","corrosivity":"","polymerization":""},"s11":{"routes_of_entry":"","toxicity_animals":"","chronic_effects":"","other_toxic":""},"s12":{"ecotoxicity":"","bod_cod":"","biodegradation":"","toxicity_biodeg":""},"s13":{"waste_disposal":""},"s14":{"dot_classification":"","identification":"","transport_provisions":""},"s15":{"osha":"","whmis":"","h_statements":"","hmis_health":"","hmis_fire":"","hmis_reactivity":"","hmis_protection":"","nfpa_health":"","nfpa_flammability":"","nfpa_reactivity":"","protective_equipment":""},"s16":{"additional_info":"","disclaimer":""}}
+
+Document:`
   };
   const body={model:'claude-sonnet-4-6',max_tokens:4000,system:sys,messages:[]};
   if(isImage&&imageData){
     body.messages=[{role:'user',content:[
       {type:'image',source:{type:'base64',media_type:imageData.mt,data:imageData.b64}},
-      {type:'text',text:'Extract all data from this '+type+' document. Return JSON matching this schema:\n'+schemas[type]}
+      {type:'text',text:schemas[type]+'\nExtract ALL data visible in this document image. Return only JSON.'}
     ]}];
   }else{
-    body.messages=[{role:'user',content:'Extract all data from this '+type+' document and return JSON matching this schema:\n'+schemas[type]+'\n\nDocument:\n'+text}];
+    body.messages=[{role:'user',content:schemas[type]+'\n\n'+text}];
   }
   const resp=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
