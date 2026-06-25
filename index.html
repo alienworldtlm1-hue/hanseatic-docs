@@ -246,9 +246,9 @@ async function startProc(){
     setPtxt('Loading PDF library...','');
     await loadPDFJS();
     setPtxt('Extracting text from document...','Reading all pages.');
-    const {text,isImage,imageData}=await readFile(uploadedFile);
+    const fileData=await readFile(uploadedFile);
     setPtxt('Sending to Claude AI...','Analyzing and mapping to Hanseatic format.');
-    const json=await callClaude(text,docType,isImage,imageData,key);
+    const json=await callClaude(fileData,docType,key);
     extractedData=json;
     setPtxt('Building preview...','Almost done.');
     await new Promise(r=>setTimeout(r,300));
@@ -292,6 +292,17 @@ async function readFile(file){
       pages.push(pageText.trim());
     }
     const fullText=pages.join('\n\n--- PAGE BREAK ---\n\n');
+    console.log('=== PDF TEXT EXTRACTED ===');
+    console.log('Length:',fullText.length,'characters');
+    console.log('Content:',fullText);
+    console.log('==========================');
+    // If almost no text, the PDF is scanned - render as image and send to Claude vision
+    if(fullText.replace(/[\s\n-]/g,'').length<40){
+      console.log('PDF appears SCANNED - converting first pages to images for vision');
+      setPtxt('Scanned PDF detected...','Converting to image for AI vision.');
+      const images=await pdfToImages(pdf);
+      return{text:'',isImage:true,imageData:null,images};
+    }
     return{text:fullText,isImage:false,imageData:null};
   }else{
     return new Promise((res,rej)=>{
@@ -299,7 +310,7 @@ async function readFile(file){
       r.onload=e=>{
         const d=e.target.result;
         const mt=d.startsWith('data:image/png')?'image/png':'image/jpeg';
-        res({text:'',isImage:true,imageData:{mt,b64:d.split(',')[1]}});
+        res({text:'',isImage:true,imageData:{mt,b64:d.split(',')[1]},images:null});
       };
       r.onerror=()=>rej(new Error('Failed to read file'));
       r.readAsDataURL(file);
@@ -307,7 +318,24 @@ async function readFile(file){
   }
 }
 
-async function callClaude(text,type,isImage,imageData,key){
+async function pdfToImages(pdf){
+  const images=[];
+  const maxPages=Math.min(pdf.numPages,5);
+  for(let i=1;i<=maxPages;i++){
+    const pg=await pdf.getPage(i);
+    const viewport=pg.getViewport({scale:2.0});
+    const canvas=document.createElement('canvas');
+    canvas.width=viewport.width;canvas.height=viewport.height;
+    const ctx=canvas.getContext('2d');
+    await pg.render({canvasContext:ctx,viewport}).promise;
+    const dataUrl=canvas.toDataURL('image/jpeg',0.85);
+    images.push(dataUrl.split(',')[1]);
+  }
+  return images;
+}
+
+async function callClaude(fileData,type,key){
+  const {text,isImage,imageData,images}=fileData;
   const sys=`You are a Senior Quality & Regulatory Affairs Engineer at CCE Hanseatic Agri GmbH. Extract ALL data from supplier documents. RULES: (1) Zero hallucination - use "N/A" if absent. (2) NEVER mention supplier/manufacturer/origin. (3) Return ONLY valid JSON, no markdown.`;
   const schemas={
     COA:`You are extracting data from a Certificate of Analysis. The document may have 3 or 4 columns (Item/Specification/Method/Result or similar). Extract ALL test parameters you can find.
@@ -354,7 +382,12 @@ JSON schema:
 Document:`
   };
   const body={model:'claude-sonnet-4-6',max_tokens:4000,system:sys,messages:[]};
-  if(isImage&&imageData){
+  if(images&&images.length){
+    // Scanned PDF -> multiple page images via vision
+    const content=images.map(b64=>({type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}}));
+    content.push({type:'text',text:schemas[type]+'\nExtract ALL data visible across these document pages. Return only JSON.'});
+    body.messages=[{role:'user',content}];
+  }else if(isImage&&imageData){
     body.messages=[{role:'user',content:[
       {type:'image',source:{type:'base64',media_type:imageData.mt,data:imageData.b64}},
       {type:'text',text:schemas[type]+'\nExtract ALL data visible in this document image. Return only JSON.'}
